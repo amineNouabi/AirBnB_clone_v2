@@ -122,13 +122,20 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
+
+        # split args into class name and parameters
         args = args.split(' ')
         class_name = args[0]
         params = args[1:]
+
         if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+
+        # create new instance of class
         new_instance = HBNBCommand.classes[class_name]()
+
+        # set attributes of new instance
         for pair in params:
             key, value = pair.split('=')
             if key in HBNBCommand.types:
@@ -138,12 +145,14 @@ class HBNBCommand(cmd.Cmd):
                         continue
                     value = value[1:-1].replace('_', ' ')
                 if key_type is float:
-                    if '.' not in value or not value.replace('.', '').isdigit():
+                    if '.' not in value:
                         continue
-                if key_type is int and not value.isdigit():
+                try:
+                    value = key_type(value)
+                except ValueError:
                     continue
-                value = key_type(value)
                 setattr(new_instance, key, value)
+
         storage.save()
         print(new_instance.id)
         storage.save()
