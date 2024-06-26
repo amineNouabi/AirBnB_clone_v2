@@ -34,6 +34,13 @@ class HBNBCommand(cmd.Cmd):
         'text': str, 'place_id': str, 'state_id': str
     }
 
+    @staticmethod
+    def classes(key):
+        """To get class from classes and defaults to None"""
+        if not key or key not in HBNBCommand.classes:
+            return None
+        return HBNBCommand.classes[key]
+
     def preloop(self):
         """Prints if isatty is false"""
         if not sys.__stdin__.isatty():
@@ -237,12 +244,9 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
-        else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
+
+        for k, v in storage.all(self.classes(args)):
+            print_list.append(str(v))
 
         print(print_list)
 
