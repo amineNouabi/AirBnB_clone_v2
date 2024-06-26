@@ -23,7 +23,9 @@ class HBNBCommand(cmd.Cmd):
         'State': State, 'City': City, 'Amenity': Amenity,
         'Review': Review
     }
+
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
+
     types = {
         'number_rooms': int, 'number_bathrooms': int,
         'max_guest': int, 'price_by_night': int,
@@ -35,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
     }
 
     @staticmethod
-    def classes(key):
+    def getClass(key):
         """To get class from classes and defaults to None"""
         if not key or key not in HBNBCommand.classes:
             return None
@@ -245,7 +247,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
 
-        for k, v in storage.all(self.classes(args)):
+        for k, v in storage.all(HBNBCommand.getClass(args)):
             print_list.append(str(v))
 
         print(print_list)
@@ -272,7 +274,7 @@ class HBNBCommand(cmd.Cmd):
         c_name = c_id = att_name = att_val = kwargs = ''
 
         # isolate cls from id/args, ex: (<cls>, delim, <id/args>)
-        args = args.partition(" ")
+        args = args.strip().partition(" ")
         if args[0]:
             c_name = args[0]
         else:  # class name not present
