@@ -19,7 +19,6 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        amenity_ids = []
 
     elif HBNB_TYPE_STORAGE == 'file':
         city_id = ""
@@ -32,7 +31,6 @@ class Place(BaseModel, Base):
         price_by_night = 0
         latitude = 0.0
         longitude = 0.0
-        amenity_ids = []
 
     def __init__(self, *args, **kwargs):
         """ Initializes a place """
