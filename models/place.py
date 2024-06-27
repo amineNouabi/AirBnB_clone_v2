@@ -4,6 +4,8 @@
 import models
 from models.base_model import BaseModel, Base
 from models.review import Review
+
+import sqlalchemy
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
@@ -37,14 +39,17 @@ class Place(BaseModel, Base):
         price_by_night = 0
         latitude = 0.0
         longitude = 0.0
+        amenity_ids = []
 
+    def __init__(self, *args, **kwargs):
+        """ Initializes a place """
+        super().__init__(*args, **kwargs)
+
+    if models.HBNB_TYPE_STORAGE != 'db':
         @property
         def reviews(self):
             """Returns the list of Review instances with place_id
                     equal to the current Place.id"""
             reviews = models.storage.all(Review)
-            return reviews.values().filter(lambda review: review.place_id == self.id)
-
-    def __init__(self, *args, **kwargs):
-        """ Initializes a place """
-        super().__init__(*args, **kwargs)
+            return reviews.values()\
+                .filter(lambda review: review.place_id == self.id)
