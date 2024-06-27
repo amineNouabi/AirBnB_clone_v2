@@ -147,7 +147,11 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[class_name]()
 
         for pair in params:
-            [key, value] = pair.split('=', 1)
+            key_value = pair.split('=', 1)
+            if len(key_value) != 2:
+                continue
+            key = key_value[0]
+            value = key_value[1]
             if key in HBNBCommand.types:
                 key_type = HBNBCommand.types[key]
                 if key_type is str:
