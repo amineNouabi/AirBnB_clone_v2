@@ -16,7 +16,7 @@ class State(BaseModel, Base):
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state", cascade="all, delete")
 
-    elif models.HBNB_TYPE_STORAGE == 'file':
+    else:
         name = ""
 
     def __init__(self, *args, **kwargs):
