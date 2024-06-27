@@ -3,7 +3,9 @@
 
 import models
 from models.base_model import BaseModel, Base
+from models.review import Review
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel, Base):
@@ -21,6 +23,8 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete")
 
     elif models.HBNB_TYPE_STORAGE == 'file':
         city_id = ""
@@ -33,6 +37,13 @@ class Place(BaseModel, Base):
         price_by_night = 0
         latitude = 0.0
         longitude = 0.0
+
+        @property
+        def reviews(self):
+            """Returns the list of Review instances with place_id
+                    equal to the current Place.id"""
+            reviews = models.storage.all(Review)
+            return reviews.values().filter(lambda review: review.place_id == self.id)
 
     def __init__(self, *args, **kwargs):
         """ Initializes a place """

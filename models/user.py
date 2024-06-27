@@ -17,6 +17,7 @@ class User(BaseModel, Base):
         first_name = Column(String(128), nullable=False)
         last_name = Column(String(128), nullable=False)
         places = relationship("Place", backref="user", cascade="all, delete")
+        reviews = relationship("Review", backref="user", cascade="all, delete")
 
     elif models.HBNB_TYPE_STORAGE == 'file':
         email = ""
