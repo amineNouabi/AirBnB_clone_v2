@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        args = args.split(' ', 1)
+        args = args.split(' ')
         if len(args) == 0:
             print("** class name missing **")
             return
