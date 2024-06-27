@@ -31,12 +31,14 @@ class BaseModel:
                     setattr(self, key, kwargs[key])
             if 'id' not in kwargs:
                 self.id = str(uuid.uuid4())
-            if kwargs.get('created_at', None) and type(kwargs['created_at']) is str:
+            if kwargs.get('created_at', None)\
+                    and type(kwargs['created_at']) is str:
                 self.created_at = datetime.strptime(kwargs['created_at'],
                                                     '%Y-%m-%dT%H:%M:%S.%f')
             else:
                 self.created_at = datetime.utcnow()
-            if kwargs.get('updated_at', None) and type(kwargs['updated_at']) is str:
+            if kwargs.get('updated_at', None)\
+                    and type(kwargs['updated_at']) is str:
                 self.updated_at = datetime.strptime(kwargs['updated_at'],
                                                     '%Y-%m-%dT%H:%M:%S.%f')
             else:
