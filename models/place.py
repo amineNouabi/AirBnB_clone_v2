@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from models.base_model import BaseModel, Base, HBNB_TYPE_STORAGE
+
+import models
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 
 
 class Place(BaseModel, Base):
     """ A place to stay """
 
-    if HBNB_TYPE_STORAGE == 'db':
+    if models.HBNB_TYPE_STORAGE == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -20,7 +22,7 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
 
-    elif HBNB_TYPE_STORAGE == 'file':
+    elif models.HBNB_TYPE_STORAGE == 'file':
         city_id = ""
         user_id = ""
         name = ""
