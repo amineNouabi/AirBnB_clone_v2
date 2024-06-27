@@ -132,8 +132,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        # split args into class name and parameters
         args = args.split(' ', 1)
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+
         class_name = args[0]
         params = args[1:]
 
@@ -143,9 +146,8 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance = HBNBCommand.classes[class_name]()
 
-        # set attributes of new instance
         for pair in params:
-            key, value = pair.split('=')
+            [key, value] = pair.split('=', 1)
             if key in HBNBCommand.types:
                 key_type = HBNBCommand.types[key]
                 if key_type is str:
