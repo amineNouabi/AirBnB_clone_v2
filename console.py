@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         # split args into class name and parameters
-        args = args.split(' ')
+        args = args.split(' ', 1)
         class_name = args[0]
         params = args[1:]
 
@@ -141,7 +141,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        # create new instance of class
         new_instance = HBNBCommand.classes[class_name]()
 
         # set attributes of new instance

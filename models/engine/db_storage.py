@@ -7,6 +7,7 @@ from models.base_model import Base
 from models.state import State
 from models.city import City
 from models.user import User
+from models.place import Place
 
 
 from sqlalchemy import create_engine
@@ -22,7 +23,7 @@ class DBStorage:
         'City': City,
         'State': State,
         'User': User,
-
+        'Place': Place,
     }
 
     def __init__(self):

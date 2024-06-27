@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
+from models.__init__ import HBNB_TYPE_STORAGE
 from models.base_model import BaseModel, Base
 from models.city import City
 
@@ -9,9 +10,18 @@ from sqlalchemy.orm import relationship
 
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = "states"
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state", cascade="all, delete")
+
+    if HBNB_TYPE_STORAGE == 'db':
+        __tablename__ = "states"
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", backref="state", cascade="all, delete")
+
+    elif HBNB_TYPE_STORAGE == 'file':
+        name = ""
+
+    def __init__(self, *args, **kwargs):
+        """ Initializes a state """
+        super().__init__(*args, **kwargs)
 
     @property
     def cities(self):
