@@ -28,7 +28,7 @@ class Place(BaseModel, Base):
         reviews = relationship("Review", backref="place",
                                cascade="all, delete")
 
-    elif models.HBNB_TYPE_STORAGE == 'file':
+    else:
         city_id = ""
         user_id = ""
         name = ""

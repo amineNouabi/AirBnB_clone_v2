@@ -19,7 +19,7 @@ class User(BaseModel, Base):
         places = relationship("Place", backref="user", cascade="all, delete")
         reviews = relationship("Review", backref="user", cascade="all, delete")
 
-    elif models.HBNB_TYPE_STORAGE == 'file':
+    else:
         email = ""
         password = ""
         first_name = ""
