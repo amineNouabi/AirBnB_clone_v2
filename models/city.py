@@ -2,8 +2,8 @@
 """ City Module for HBNB project """
 import models
 from models.base_model import BaseModel, Base
+from models.place import Place
 
-import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -24,3 +24,13 @@ class City(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """ Initializes a city """
         super().__init__(*args, **kwargs)
+
+    if models.HBNB_TYPE_STORAGE != 'db':
+        @property
+        def places(self):
+            """Getter attribute in case of file storage"""
+            place_list = []
+            for place in models.storage.all(Place).values():
+                if place.city_id == self.id:
+                    place_list.append(place)
+                return place_list

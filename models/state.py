@@ -28,7 +28,5 @@ class State(BaseModel, Base):
         def cities(self):
             """Returns the list of City instances with state_id
                 equal to the current State.id"""
-
-            cities = models.storage.all(City)
-            return cities.values()\
-                .filter(lambda city: city.state_id == self.id)
+            cities = models.storage.all(City).values()
+            return cities.filter(lambda city: city.state_id == self.id)

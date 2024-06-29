@@ -50,6 +50,6 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Returns the list of Review instances with place_id
                     equal to the current Place.id"""
-            reviews = models.storage.all(Review)
-            return reviews.values()\
-                .filter(lambda review: review.place_id == self.id)
+            reviews = models.storage.all(Review).values()
+            return reviews.filter(
+                lambda review: review.place_id == self.id)
