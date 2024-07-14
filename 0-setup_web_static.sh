@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#Sets up web server for the deployment of web_static
 
 #Check if system is running ubuntu
 if [ ! -d "/etc/apt" ]; then
