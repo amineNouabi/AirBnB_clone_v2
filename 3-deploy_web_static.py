@@ -7,7 +7,7 @@ from fabric.api import put, run, env, local
 from os.path import getsize
 from datetime import datetime
 
-env.hosts = ["web-01.nouabi.tech", "web-02.nouabi.tech"]
+env.hosts = ["34.203.75.0", "18.233.67.166"]
 
 
 @runs_once

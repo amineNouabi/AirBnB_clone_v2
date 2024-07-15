@@ -6,7 +6,7 @@ Module defining a Fabric script that deploys
 
 from fabric.api import put, run, env
 
-env.hosts = ["web-01.nouabi.tech", "web-02.nouabi.tech"]
+env.hosts = ["34.203.75.0", "18.233.67.166"]
 
 
 def do_deploy(archive_path):
