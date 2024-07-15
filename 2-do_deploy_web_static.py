@@ -5,14 +5,13 @@ Module defining a Fabric script that deploys
 """
 
 from fabric.api import put, run, env
-from os.path import isfile
 
 env.hosts = ["web-01.nouabi.tech", "web-02.nouabi.tech"]
 
 
 def do_deploy(archive_path):
     """Deploys a .tgz archive to the web servers"""
-    if not archive_path or not isfile(archive_path):
+    if not archive_path:
         return False
 
     try:

@@ -4,7 +4,7 @@ Module defining a Fabric script that compresses and deploys to web servers
 """
 from fabric.decorators import runs_once
 from fabric.api import put, run, env, local
-from os.path import isfile, getsize
+from os.path import getsize
 from datetime import datetime
 
 env.hosts = ["web-01.nouabi.tech", "web-02.nouabi.tech"]
@@ -34,7 +34,7 @@ def do_pack():
 
 def do_deploy(archive_path):
     """Deploys a .tgz archive to the web servers"""
-    if not archive_path or not isfile(archive_path):
+    if not archive_path:
         return False
 
     try:
