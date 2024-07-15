@@ -6,7 +6,7 @@ Module defining a Fabric script that compresses
 
 from fabric.api import local
 from datetime import datetime
-import os
+from os.path import getsize
 
 
 def do_pack():
@@ -22,5 +22,5 @@ def do_pack():
         return None
     else:
         print("web_static packed: {} -> {}Bytes".format(file_name,
-              os.path.getsize(file_name)))
+                                                        getsize(file_name)))
         return result
