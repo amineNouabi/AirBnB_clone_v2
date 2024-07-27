@@ -6,7 +6,7 @@ Module defining a Flask web application
 
 """
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -41,6 +41,12 @@ def python_is_cool(text):
 def number(n):
     """route '/number/<n>' returns 'n is a number' if n is an integer"""
     return '{} is a number'.format(n)
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def number_template(n):
+    """route '/number_template/<n>' returns a template with n"""
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
