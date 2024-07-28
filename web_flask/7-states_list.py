@@ -11,18 +11,18 @@ from models import storage
 app = Flask(__name__)
 
 
+@app.teardown_appcontext
+def close_db(error):
+    """ Close the database connection """
+    storage.close()
+
+
 @app.route("/states_list", strict_slashes=False)
 def states_list():
     """ List all states """
     states = sorted(list(storage.all("State").values()),
                     key=lambda state: state.name)
     return render_template("7-states_list.html", states=states)
-
-
-@app.teardown_appcontext
-def close_db(error):
-    """ Close the database connection """
-    storage.close()
 
 
 if __name__ == "__main__":
