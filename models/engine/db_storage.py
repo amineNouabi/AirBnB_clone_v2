@@ -3,14 +3,14 @@
 
 
 from os import getenv
-from models.base_model import Base
+from models.base_model import Base, BaseModel
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
@@ -21,11 +21,13 @@ class DBStorage:
     __session = None
 
     __classes = {
+        'Amenity': Amenity,
+        'BaseModel': BaseModel,
         'City': City,
+        'Place': Place,
+        'Review': Review,
         'State': State,
         'User': User,
-        'Place': Place,
-        'Review': Review
     }
 
     def __init__(self):
@@ -35,7 +37,7 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}?charset=latin1'
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(HBNB_MYSQL_USER,
                                               HBNB_MYSQL_PWD,
                                               HBNB_MYSQL_HOST,
@@ -63,7 +65,7 @@ class DBStorage:
 
     def delete(self, obj=None):
         """Deletes obj from the current database session"""
-        if obj:
+        if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
@@ -73,10 +75,6 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session
-
-    def close(self):
-        """Closes the current session"""
-        self.__session.remove()
 
     def close(self):
         """Closes the current session"""

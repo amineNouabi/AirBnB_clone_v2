@@ -28,7 +28,8 @@ def clean_remote(number=0):
     if number < 1:
         number = 1
     number += 1
-    run("cd /data/web_static/releases; ls -t1 | tail -n +{} | xargs rm -rf".format(number))
+    run("cd / data/web_static/releases \
+        ls - t1 | tail - n + {} | xargs rm - rf".format(number))
 
 
 def do_clean(number=0):

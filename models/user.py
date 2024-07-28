@@ -35,17 +35,11 @@ class User(BaseModel, Base):
         @property
         def reviews(self):
             """Getter attribute in case of file storage"""
-            review_list = []
-            for review in models.storage.all(Review).values():
-                if review.user_id == self.id:
-                    review_list.append(review)
-            return review_list
+            return [review for review in models.storage.all(Review).values()
+                    if review.user_id == self.id]
 
         @property
         def places(self):
             """Getter attribute in case of file storage"""
-            place_list = []
-            for place in models.storage.all(Place).values():
-                if place.user_id == self.id:
-                    place_list.append(place)
-            return place_list
+            return [place for place in models.storage.all(Place).values()
+                    if place.user_id == self.id]

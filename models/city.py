@@ -29,8 +29,5 @@ class City(BaseModel, Base):
         @property
         def places(self):
             """Getter attribute in case of file storage"""
-            place_list = []
-            for place in models.storage.all(Place).values():
-                if place.city_id == self.id:
-                    place_list.append(place)
-                return place_list
+            places = models.storage.all(Place)
+            return [place for place in places if place.city_id == self.id]

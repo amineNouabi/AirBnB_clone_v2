@@ -4,10 +4,10 @@
 import uuid
 from datetime import datetime
 
-import models
-
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+
+import models
 
 if models.HBNB_TYPE_STORAGE == 'db':
     Base = declarative_base()
