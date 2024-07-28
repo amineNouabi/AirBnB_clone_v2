@@ -30,5 +30,6 @@ class Amenity(BaseModel, Base):
         def place_amenities(self):
             """Getter attribute in case of file storage"""
             import models
-            return [place_amenity for place_amenity in models.storage.all("Place").values()
+            return [place_amenity for place_amenity
+                    in models.storage.all("Place").values()
                     if place_amenity.amenity_id == self.id]
