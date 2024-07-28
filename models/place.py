@@ -10,17 +10,11 @@ from sqlalchemy.orm import relationship
 if models.HBNB_TYPE_STORAGE == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
-                                 ForeignKey(
-                                     'places.id',
-                                     onupdate='CASCADE',
-                                     ondelete='CASCADE'),
+                                 ForeignKey('places.id'),
                                  nullable=False,
                                  primary_key=True),
                           Column('amenity_id', String(60),
-                                 ForeignKey(
-                                     'amenities.id',
-                                     onupdate='CASCADE',
-                                     ondelete='CASCADE'),
+                                 ForeignKey('amenities.id'),
                                  nullable=False,
                                  primary_key=True))
 
