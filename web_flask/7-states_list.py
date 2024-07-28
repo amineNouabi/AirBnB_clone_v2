@@ -12,11 +12,16 @@ from models.state import State
 app = Flask(__name__)
 
 
+@app.teardown_appcontext
+def close_db(error):
+    """ Close the database connection """
+    storage.close()
+
+
 @app.route("/states", strict_slashes=False)
 def list_states():
     """ List all states """
     states = storage.all(State).values()
-    storage.close()
     return render_template("7-states_list.html", states=states)
 
 
