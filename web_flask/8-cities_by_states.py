@@ -18,11 +18,11 @@ def close_db(error):
     storage.close()
 
 
-@app.route("/cities_by_state", strict_slashes=False)
+@app.route("/cities_by_states", strict_slashes=False)
 def cities_by_state():
     """ List all cities by state """
     states = sorted(storage.all(State).values(), key=lambda state: state.name)
-    return render_template("7-states_list.html", states=states)
+    return render_template("8-cities_by_states.html", states=states)
 
 
 if __name__ == "__main__":
