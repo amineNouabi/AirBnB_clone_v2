@@ -15,7 +15,8 @@ class Place(BaseModel, Base):
 
     if models.HBNB_TYPE_STORAGE == 'db':
         __tablename__ = 'places'
-        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+        city_id = Column(String(60), ForeignKey(
+            'cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
@@ -51,5 +52,4 @@ class Place(BaseModel, Base):
             """Returns the list of Review instances with place_id
                     equal to the current Place.id"""
             reviews = models.storage.all(Review).values()
-            return reviews.filter(
-                lambda review: review.place_id == self.id)
+            return [review for review in reviews if review.place_id == self.id]
