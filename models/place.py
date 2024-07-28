@@ -3,7 +3,6 @@
 
 import models
 from models.base_model import BaseModel, Base
-from models.review import Review
 
 from sqlalchemy import Column, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
@@ -15,13 +14,15 @@ if models.HBNB_TYPE_STORAGE == 'db':
                                      'places.id',
                                      onupdate='CASCADE',
                                      ondelete='CASCADE'),
-                                 primary_key=True, nullable=False),
+                                 nullable=False,
+                                 primary_key=True),
                           Column('amenity_id', String(60),
                                  ForeignKey(
                                      'amenities.id',
                                      onupdate='CASCADE',
                                      ondelete='CASCADE'),
-                                 primary_key=True, nullable=False))
+                                 nullable=False,
+                                 primary_key=True))
 
 
 class Place(BaseModel, Base):
@@ -43,7 +44,7 @@ class Place(BaseModel, Base):
         reviews = relationship("Review", backref="place",
                                cascade="all, delete")
         amenities = relationship("Amenity", secondary=place_amenity,
-                                 viewonly=False)
+                                 back_populates="place_amenities")
 
     else:
         city_id = ""
@@ -67,7 +68,7 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Returns the list of Review instances with place_id
                     equal to the current Place.id"""
-            reviews = models.storage.all(Review).values()
+            reviews = models.storage.all("Review").values()
             return [review for review in reviews if review.place_id == self.id]
 
         @property
@@ -77,3 +78,9 @@ class Place(BaseModel, Base):
             amenities = models.storage.all("Amenity").values()
             return [amenity for amenity in amenities
                     if amenity.id in self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, obj):
+            """Setter attribute in case of file storage"""
+            if type(obj).__name__ == 'Amenity':
+                self.amenity_ids.append(obj.id)
