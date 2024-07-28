@@ -21,7 +21,7 @@ def close_db(error):
 @app.route("/states", strict_slashes=False)
 def list_states():
     """ List all states """
-    states = storage.all(State).values()
+    states = sorted(storage.all(State).values(), key=lambda state: state.name)
     return render_template("7-states_list.html", states=states)
 
 
